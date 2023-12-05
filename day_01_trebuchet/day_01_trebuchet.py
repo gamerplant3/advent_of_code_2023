@@ -75,7 +75,7 @@ for i in range(len(lines)):
     for n in range(len(letter_numbers)):
         as_flat = [item for item in concat_lists[n]]
         locations2.append(as_flat)
-    #print(locations2)
+    print(locations2)
 
     # find word numbers in the string and their locations
     for j in range(len(letter_numbers)):
@@ -87,6 +87,8 @@ for i in range(len(lines)):
             locations2[j].append(index) #yes, it's supposed to be an int
             #print(str(letter_numbers[j]) + ' found at ' + str(index))
             index += len(letter_numbers[j]) # jump forward by amount = the length of the word
+            # line above can be adjusted to only step forward by 1 index if there's significant
+            # overlap between words. eg if you want "thathat" to return "that" at both 0 and 3
     #print(locations2)
 
     # check for lowest index
