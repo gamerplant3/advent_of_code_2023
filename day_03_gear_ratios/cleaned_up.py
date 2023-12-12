@@ -1,15 +1,12 @@
-# Advent of Code - Day 03 - Gear Ratios
-# filename: day_03_gear_ratios.py | 11 Dec 2023
-
-# necessary imports
+# Advent of Code - Day 03 - Gear Ratios | filename: day_03_gear_ratios.py | 11 Dec 2023
+# required libraries
 import re
 
 # import the txt file and reads each line into a list of strings
 file = open('day_03_input.txt', 'r')
 lines = file.read().splitlines()
 
-# region PART 1
-
+# my functions
 def box_builder(row_number, index_start, index_end):
     # helper function that takes a row number and a pair of indexes (number start and number end)
     # and builds a box around it for checking for symbols
@@ -31,15 +28,14 @@ def box_builder(row_number, index_start, index_end):
             row_below.append((row_number + 1, i + index_start - 1))
     return row_above, same_row, row_below
 
+# PART 1
 part_numbers = [] # list of numbers that are adjacent to symbols
-
 for i in range(len(lines)):
     numbers = re.findall(r'\d+', lines[i]) # find all numbers
     indexes = [(m.start(0), m.end(0)) for m in re.finditer(r'\d+', lines[i])]  # grab their indexes
 
     for j in range(len(indexes)): # per number
         check_top = False; check_mid = False; check_bot = False
-
         a, b, c = box_builder(i, indexes[j][0], indexes[j][1])
         if i > 0: # skip "row above" check for first row
             for k in range(len(a)):
@@ -60,19 +56,17 @@ for i in range(len(lines)):
                     check_mid = True
         else: check_bot = False
 
-        # if you found a symbol anywhere around the number, it's a valid part number
         if check_top == True or check_mid == True or check_bot == True:
-            part_numbers.append(numbers[j])
+            part_numbers.append(numbers[j]) # append if you found a symbol anywhere
 
 part_nums_to_int = list(map(int, part_numbers)) # from list of strings to list of integers
 answer = sum(part_nums_to_int)
 print("Part 1 answer = " + str(answer))
-# endregion
 
 # region PART 2
+
 gear_ratios = []
 gears = []
-
 for i in range(len(lines)): # per line
     stars = re.findall(r'[*]', lines[i]) # find all asterix
     star_indexes = [(m.start(0), m.end(0)) for m in re.finditer(r'[*]', lines[i])] # get their indexes
@@ -104,8 +98,7 @@ for i in range(len(lines)): # per line
             current_character = lines[b[m][0]][b[m][1]]
             if current_character.isdigit():  # look for numbers
                 current_row = lines[b[m][0]]
-                if lines[b[m][0]][b[m][1]+1] == "*":
-
+                if lines[b[m][0]][b[m][1]+1] == "*": # asterix on right
                     # look for a dots. if you're at the ends of the line, return first/last element
                     mid_left_dot = current_row.rfind(".", 0, b[m][1])
                     if mid_left_dot == -1: # if none found, you're at the start
@@ -115,8 +108,8 @@ for i in range(len(lines)): # per line
 
                     if numero_mid not in all_part_numbers:
                         all_part_numbers.append(numero_mid)
-                elif lines[b[m][0]][b[m][1]-1] == "*":
 
+                elif lines[b[m][0]][b[m][1]-1] == "*": # asterix on left
                     # look for a dots. if you're at the ends of the line, return first/last element
                     check_midright = current_row.find(".", b[m][1], len(current_row))
                     mid_right_dot = len(current_row) if check_midright == -1 else check_midright
@@ -135,7 +128,6 @@ for i in range(len(lines)): # per line
                     check_botright = bot_row.find(".", c[n][1], len(bot_row))
                     bot_right_dot = len(bot_row) if check_botright == -1 else check_botright
                     bot_left_dot = bot_row.rfind(".", 0, c[n][1])
-
                     if bot_left_dot == -1: # if none found, take first left elements
                         numero_bot = bot_row[:bot_right_dot]
                     else:
@@ -146,29 +138,10 @@ for i in range(len(lines)): # per line
         else:
             continue
 
-        if len(all_part_numbers) == 2:
+        if len(all_part_numbers) == 2: # only return if exactly 2 numbers
             gears.append(all_part_numbers)
             gear_ratios.append(int(all_part_numbers[0]) * int(all_part_numbers[1]))
 
 gears_as_int = [[int(num) for num in k] for k in gears]
-# print(gears_as_int)
 answer2 = sum(gear_ratios)
 print("Part 2 answer = " + str(answer2))
-# endregion
-
-# used someone else's solution to compare my output and find the problem. i was looking
-# for dots to the left at the beginning of the line (return -1) and to the right at the
-# end of the line (result -1) which was being incorrently cut off by my code, so i was
-# missing some results.
-#
-# code used for comparing results:
-# set1 = {tuple(sorted(inner)) for inner in gears_as_int}
-# set2 = {tuple(sorted(inner)) for inner in their_list}
-# differences = set1.symmetric_difference(set2)
-#
-# if not differences: print("The lists contain all the same elements.")
-# else:
-#     print("The lists do not contain all the same elements.")
-#     for diff in differences:
-#         if diff in set1: print(f"Elements {diff} are in your list but not in theirs.")
-#         else: print(f"Elements {diff} are in their list but not in yours.")

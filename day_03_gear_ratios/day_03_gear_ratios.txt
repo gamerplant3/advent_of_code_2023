@@ -64,3 +64,8 @@ In this schematic, there are two gears. The first is in the top left; it has par
 
 What is the sum of all of the gear ratios in your engine schematic?
 
+Your puzzle answer was 81296995.
+
+That's the right answer! You are one gold star closer to restoring snow operations.
+
+You have completed Day 3! You can [Shareon Twitter Mastodon] this victory or [Return to Your Advent Calendar].
