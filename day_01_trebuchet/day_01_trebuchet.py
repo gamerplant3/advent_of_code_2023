@@ -42,7 +42,6 @@ answer = sum(two_digit_lines)
 
 print("Part 1 answer = " + str(answer))
 
-
 # region PART 2 Challenge:
 # Repeat Part 1, except also consider any digits that are spelled out with letters.
 # one, two, three, four, five, six, seven, eight, and nine also count as valid "digits"
