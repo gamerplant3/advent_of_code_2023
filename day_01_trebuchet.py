@@ -1,4 +1,4 @@
-# Advent of Code - Day 01 - Trebuchet | filename: cleaned_up.py
+# Advent of Code - Day 01 - Trebuchet | filename: day_01_trebuchet.py
 # PART 1 Challenge:
 file = open('day_01_input.txt', 'r') # import the txt file and reads each line into a list of strings
 lines = file.read().splitlines()
