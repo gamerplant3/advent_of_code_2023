@@ -63,8 +63,7 @@ part_nums_to_int = list(map(int, part_numbers)) # from list of strings to list o
 answer = sum(part_nums_to_int)
 print("Part 1 answer = " + str(answer))
 
-# region PART 2
-
+# PART 2
 gear_ratios = []
 gears = []
 for i in range(len(lines)): # per line
